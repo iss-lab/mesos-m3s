@@ -26,7 +26,7 @@ func (e *API) V0AdjustClusterResources(w http.ResponseWriter, r *http.Request) {
 	}
 
 	component := vars["component"]
-	resource := vars["value"]
+	resource := vars["resource"]
 	value, err := strconv.Atoi(vars["value"])
 	if component == "" || resource == "" || err != nil {
 		logrus.WithField("func", "api.V0AdjustClusterResources").Error("Error: Required Fields/Parameters are empty or wrong: ", err.Error())
@@ -38,45 +38,48 @@ func (e *API) V0AdjustClusterResources(w http.ResponseWriter, r *http.Request) {
 
 	switch component {
 	case "ds":
-		if resource == "cpus" {
+		switch resource {
+		case "cpus":
 			e.Config.DSCPU = float64(value)
-		} else if resource == "cpusLimit" {
+		case "cpusLimit":
 			e.Config.DSCPULimit = float64(value)
-		} else if resource == "memory" {
+		case "memory":
 			e.Config.DSMEM = float64(value)
-		} else if resource == "memoryLimit" {
+		case "memoryLimit":
 			e.Config.DSMEMLimit = float64(value)
-		} else if resource == "disk" {
+		case "disk":
 			e.Config.DSDISK = float64(value)
-		} else if resource == "diskLimit" {
+		case "diskLimit":
 			e.Config.DSDISKLimit = float64(value)
 		}
 	case "server":
-		if resource == "cpus" {
+		switch resource {
+		case "cpus":
 			e.Config.K3SServerCPU = float64(value)
-		} else if resource == "cpusLimit" {
+		case "cpusLimit":
 			e.Config.K3SServerCPULimit = float64(value)
-		} else if resource == "memory" {
+		case "memory":
 			e.Config.K3SServerMEM = float64(value)
-		} else if resource == "memoryLimit" {
+		case "memoryLimit":
 			e.Config.K3SServerMEMLimit = float64(value)
-		} else if resource == "disk" {
+		case "disk":
 			e.Config.K3SServerDISK = float64(value)
-		} else if resource == "diskLimit" {
+		case "diskLimit":
 			e.Config.K3SServerDISKLimit = float64(value)
 		}
 	case "agent":
-		if resource == "cpus" {
+		switch resource {
+		case "cpus":
 			e.Config.K3SAgentCPU = float64(value)
-		} else if resource == "cpusLimit" {
+		case "cpusLimit":
 			e.Config.K3SAgentCPULimit = float64(value)
-		} else if resource == "memory" {
+		case "memory":
 			e.Config.K3SAgentMEM = float64(value)
-		} else if resource == "memoryLimit" {
+		case "memoryLimit":
 			e.Config.K3SAgentMEMLimit = float64(value)
-		} else if resource == "disk" {
+		case "disk":
 			e.Config.K3SAgentDISK = float64(value)
-		} else if resource == "diskLimit" {
+		case "diskLimit":
 			e.Config.K3SAgentDISKLimit = float64(value)
 		}
 	}
